@@ -266,10 +266,10 @@ Error WebSocketMultiplayerPeer::_server_relay(int32_t p_from, int32_t p_to, cons
 		return OK; // Sent to all but sender and excluded
 
 	} else {
-
+		Ref<WebSocketPeer> peer_to = get_peer(p_to);
 		ERR_FAIL_COND_V(p_to == p_from, FAILED);
-
-		return get_peer(p_to)->put_packet(p_buffer, p_buffer_size); // Sending to specific peer
+		ERR_FAIL_COND_V(peer_to == NULL,FAILED);
+		return peer_to->put_packet(p_buffer, p_buffer_size); // Sending to specific peer
 	}
 }
 
